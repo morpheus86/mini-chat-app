@@ -16,4 +16,8 @@ io.on('connection', (socket) => {
     //we  want to send it out to all the different clients connected to the server.
     io.sockets.emit('chat', data)
   })
+  socket.on('typing', (data) => {
+    //emit to every single client except the person typing
+    socket.broadcast.emit('typing', data)
+  })
 })

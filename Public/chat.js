@@ -6,6 +6,7 @@ const message = document.getElementById('message')
 const handle = document.getElementById('handle')
 const btn = document.getElementById('send')
 const output = document.getElementById('output')
+const feedback = document.getElementById('feedback')
 
 //Emit Event
 
@@ -16,8 +17,15 @@ btn.addEventListener('click', () => {
     handle: handle.value,
   })
 })
-
-//listen to even
+message.addEventListener('keypress', () => {
+  socket.emit('typing', handle.value)
+})
+//listen to event
 socket.on('chat', (data) => {
-  output.innerHTML += `<p><strong> ${data.handle} </strong>: ${data.message} </p>`
+  feedback.innerHTML = ''
+  output.innerHTML += `<p><strong> ${data.handle}: </strong>: ${data.message} </p>`
+})
+
+socket.on('typing', (data) => {
+  feedback.innerHTML = `<p><em> ${data} is typing a message...</em></p>`
 })
