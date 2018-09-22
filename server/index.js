@@ -9,5 +9,5 @@ app.use(express.static('public'))
 
 const io = socket(server)
 io.on('connection', (socket) => {
-  console.log('Connection made')
+  console.log('Connection made', socket.id)
 })
